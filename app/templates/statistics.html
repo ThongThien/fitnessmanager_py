@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container my-5">
+  <h1 class="mb-4">Trang Thống kê</h1>
+  <div class="row g-4">
+    <!-- Tổng học viên -->
+    <div class="col-md-3">
+      <div class="card text-white bg-primary h-100 shadow">
+        <div class="card-body text-center">
+          <h5 class="card-title">Tổng Học viên</h5>
+          <p class="display-4">{{ stats.total_students }}</p>
+        </div>
+      </div>
+    </div>
+    <!-- Tổng huấn luyện viên -->
+    <div class="col-md-3">
+      <div class="card text-white bg-success h-100 shadow">
+        <div class="card-body text-center">
+          <h5 class="card-title">Tổng Huấn luyện viên</h5>
+          <p class="display-4">{{ stats.total_trainers }}</p>
+        </div>
+      </div>
+    </div>
+    <!-- Tổng lớp học -->
+    <div class="col-md-3">
+      <div class="card text-white bg-warning h-100 shadow">
+        <div class="card-body text-center">
+          <h5 class="card-title">Tổng Lớp học</h5>
+          <p class="display-4">{{ stats.total_classes }}</p>
+        </div>
+      </div>
+    </div>
+    <!-- Tỉ lệ học viên đăng ký -->
+    <div class="col-md-3">
+      <div class="card text-white bg-danger h-100 shadow">
+        <div class="card-body text-center">
+          <h5 class="card-title">Tỉ lệ học viên đăng ký (%)</h5>
+          <p class="display-4">{{ stats.ratio_registered }}%</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

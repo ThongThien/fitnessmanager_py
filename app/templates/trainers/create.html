@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2 class="mb-4">Thêm Huấn luyện viên mới</h2>
+
+    <form action="{{ url_for('main.trainers_create') }}" method="POST" class="row g-3">
+
+      <div class="col-md-6">
+        <label for="name" class="form-label">Tên <span class="text-danger">*</span></label>
+        <input type="text" class="form-control" id="name" name="name" required />
+      </div>
+
+      <div class="col-md-6">
+        <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+        <input type="email" class="form-control" id="email" name="email" required />
+      </div>
+
+      <div class="col-md-6">
+        <label for="phone" class="form-label">Điện thoại</label>
+        <input type="text" class="form-control" id="phone" name="phone" />
+      </div>
+
+      <div class="col-md-6">
+        <label for="dob" class="form-label">Ngày sinh</label>
+        <input type="date" class="form-control" id="dob" name="dob" />
+      </div>
+
+      <div class="col-12">
+        <label for="expertise" class="form-label">Chuyên môn</label>
+        <textarea class="form-control" id="expertise" name="expertise" rows="3"></textarea>
+      </div>
+
+      <div class="col-12">
+        <button type="submit" class="btn btn-primary">Thêm mới</button>
+        <a href="{{ url_for('main.trainers_index') }}" class="btn btn-secondary ms-2">Quay lại danh sách</a>
+      </div>
+
+    </form>
+{% endblock %}

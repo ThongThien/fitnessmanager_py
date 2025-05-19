@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Chi tiết Huấn luyện viên: {{ trainer.name }}</h1>
+  <p><strong>Email:</strong> {{ trainer.email }}</p>
+  <p><strong>Điện thoại:</strong> {{ trainer.phone }}</p>
+  <p><strong>Ngày sinh:</strong> {{ trainer.dob }}</p>
+  <p><strong>Chuyên môn:</strong> {{ trainer.expertise }}</p>
+  <a href="{{ url_for('main.trainers_index') }}">Quay lại danh sách</a>
+</body>
+{% endblock %}

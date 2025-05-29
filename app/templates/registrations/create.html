@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2 class="mb-4">Thêm Đăng ký Lớp mới</h2>
+
+    <!-- Hiển thị flash messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div>
+          {% for category, message in messages %}
+            <div class="alert alert-{{ 'warning' if category == 'warning' else 'danger' if category == 'danger' else 'success' }}" role="alert">
+              {{ message }}
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <form action="{{ url_for('main.registrations_create') }}" method="POST" class="row g-3">
+
+      <div class="col-md-6">
+        <label for="student_id" class="form-label">Chọn Học viên <span class="text-danger">*</span></label>
+        <select class="form-select" id="student_id" name="student_id" required>
+          <option value="">Chọn học viên</option>
+          {% for student in students %}
+          <option value="{{ student.id }}">{{ student.name }} ({{ student.email }})</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="col-md-6">
+        <label for="class_id" class="form-label">Chọn Lớp học <span class="text-danger">*</span></label>
+        <select class="form-select" id="class_id" name="class_id" required>
+          <option value="">Chọn lớp học</option>
+          {% for cls in classes %}
+          <option value="{{ cls.id }}">{{ cls.class_name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="col-12">
+        <button type="submit" class="btn btn-primary">Thêm đăng ký</button>
+        <a href="{{ url_for('main.registrations_index') }}" class="btn btn-secondary ms-2">Quay lại danh sách</a>
+      </div>
+
+    </form>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h2>Danh sách Đăng ký Lớp</h2>
+      <a href="{{ url_for('main.registrations_create') }}" class="btn btn-success">Thêm Đăng ký mới</a>
+    </div>
+
+<div class="table-responsive">
+  <table class="table table-striped table-hover align-middle">
+    <thead class="table-primary">
+      <tr>
+        <th>ID</th>
+        <th>Học viên</th>
+        <th>Lớp học</th>
+        <th>Ngày đăng ký</th>
+        <th>Hành động</th> <!-- Thêm cột hành động -->
+      </tr>
+    </thead>
+    <tbody>
+      {% for reg in registrations %}
+      <tr>
+        <td>{{ reg.id }}</td>
+        <td>{{ reg.student.name }}</td>
+        <td>{{ reg.clazz.class_name }}</td>
+        <td>{{ reg.registration_date.strftime('%d-%m-%Y %H:%M:%S') }}</td>
+        <td>
+          <form action="{{ url_for('main.registrations_delete', id=reg.id) }}" method="POST" onsubmit="return confirm('Bạn có chắc muốn xóa đăng ký này không?');">
+            <button type="submit" class="btn btn-danger btn-sm">Xóa</button>
+          </form>
+        </td>
+      </tr>
+      {% else %}
+      <tr>
+        <td colspan="5" class="text-center fst-italic">Chưa có đăng ký nào</td> <!-- sửa colspan thành 5 -->
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2 class="mb-4">Thêm Lớp học mới</h2>
+
+    <form action="{{ url_for('main.classes_create') }}" method="POST" class="row g-3">
+
+      <div class="col-md-6">
+        <label for="class_name" class="form-label">Tên lớp <span class="text-danger">*</span></label>
+        <input type="text" class="form-control" id="class_name" name="class_name" required />
+      </div>
+
+      <div class="col-md-6">
+        <label for="schedule" class="form-label">Lịch học <span class="text-danger">*</span></label>
+        <input type="text" class="form-control" id="schedule" name="schedule" required />
+      </div>
+
+      <div class="col-12">
+        <label for="description" class="form-label">Mô tả</label>
+        <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+      </div>
+
+      <div class="col-md-4">
+        <label for="max_students" class="form-label">Số lượng tối đa <span class="text-danger">*</span></label>
+        <input
+          type="number"
+          class="form-control"
+          id="max_students"
+          name="max_students"
+          min="1"
+          required
+        />
+      </div>
+
+      <div class="col-md-8">
+        <label for="trainer_id" class="form-label">Huấn luyện viên <span class="text-danger">*</span></label>
+        <select class="form-select" id="trainer_id" name="trainer_id" required>
+          <option value="">Chọn huấn luyện viên</option>
+          {% for trainer in trainers %}
+          <option value="{{ trainer.id }}">{{ trainer.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="col-12">
+        <button type="submit" class="btn btn-primary">Thêm mới</button>
+        <a href="{{ url_for('main.classes_index') }}" class="btn btn-secondary ms-2">Quay lại danh sách</a>
+      </div>
+
+    </form>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="mb-4">Chi tiết Học viên</h1>
+
+<ul class="list-group mb-4">
+  <li class="list-group-item"><strong>ID:</strong> {{ student.id }}</li>
+  <li class="list-group-item"><strong>Tên:</strong> {{ student.name }}</li>
+  <li class="list-group-item"><strong>Email:</strong> {{ student.email }}</li>
+  <li class="list-group-item"><strong>Điện thoại:</strong> {{ student.phone or 'Chưa cập nhật' }}</li>
+  <li class="list-group-item"><strong>Ngày sinh:</strong> {{ student.dob or 'Chưa cập nhật' }}</li>
+  <li class="list-group-item"><strong>Địa chỉ:</strong> {{ student.address or 'Chưa cập nhật' }}</li>
+  <li class="list-group-item"><strong>Giới tính:</strong> {{ student.gender }}</li>
+</ul>
+
+<a href="{{ url_for('main.students_index') }}" class="btn btn-secondary">Quay lại</a>
+<a href="{{ url_for('main.students_edit', id=student.id) }}" class="btn btn-primary ms-2">Sửa</a>
+{% endblock %}

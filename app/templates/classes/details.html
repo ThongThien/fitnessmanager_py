@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2 class="mb-4">Chi tiết Lớp học: <span class="text-primary">{{ cls.class_name }}</span></h2>
+
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <p><strong>Mô tả:</strong> {{ cls.description or 'Không có mô tả' }}</p>
+        <p><strong>Lịch học:</strong> {{ cls.schedule }}</p>
+        <p><strong>Số lượng tối đa:</strong> {{ cls.max_students }}</p>
+        <p><strong>Huấn luyện viên:</strong> {{ cls.trainer.name if cls.trainer else 'Chưa có' }}</p>
+      </div>
+    </div>
+
+    <a href="{{ url_for('main.classes_index') }}" class="btn btn-secondary mt-4">Quay lại danh sách</a>
+{% endblock %}

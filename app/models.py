@@ -47,5 +47,6 @@ class ClassRegistration(db.Model):
     student_id = db.Column(db.Integer, db.ForeignKey('students.id'), nullable=False)
     class_id = db.Column(db.Integer, db.ForeignKey('classes.id'), nullable=False)
     registration_date = db.Column(db.DateTime, server_default=db.func.current_timestamp())
+    expired_date = db.Column(db.DateTime)  # ➕ Thêm dòng này
     student = db.relationship('Student', back_populates='registrations')
     clazz = db.relationship('Class', back_populates='registrations')

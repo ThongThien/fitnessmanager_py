@@ -1,6 +1,8 @@
-from flask import Blueprint, render_template, request, redirect, url_for, abort
+from flask import Blueprint, flash, render_template, request, redirect, url_for, abort
 from .services import *
 from .repositories import get_student_by_id, get_trainer_by_id, get_class_by_id, get_registration_by_id
+from datetime import datetime, timedelta
+  
 
 main_bp = Blueprint('main', __name__)
 
@@ -65,8 +67,6 @@ def students_detail(id):
 def registrations_index():
     registrations = list_registrations()
     return render_template('registrations/index.html', registrations=registrations)
-
-from flask import flash  # dùng để hiển thị thông báo
 
 @main_bp.route('/registrations/create', methods=['GET', 'POST'])
 def registrations_create():
@@ -137,6 +137,28 @@ def registrations_create():
         return redirect(url_for('main.registrations_index'))
 
     return render_template('registrations/create.html', students=students, classes=classes)
+
+@main_bp.route('/registrations/extend/<int:reg_id>', methods=['POST'])
+def registrations_extend(reg_id):
+    reg = ClassRegistration.query.get_or_404(reg_id)
+    extend_type = request.form.get('extend_type')
+
+    days = 0
+    if extend_type == '15d':
+        days = 15
+    elif extend_type == '1m':
+        days = 30
+    elif extend_type == '2m':
+        days = 60
+
+    if reg.expired_date is None:
+        reg.expired_date = datetime.utcnow() + timedelta(days=days)
+    else:
+        reg.expired_date += timedelta(days=days)
+
+    db.session.commit()
+    flash('Gia hạn thành công!', 'success')
+    return redirect(url_for('main.registrations_index'))
 
 @main_bp.route('/registrations/delete/<int:id>', methods=['POST'])
 def registrations_delete(id):

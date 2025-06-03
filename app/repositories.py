@@ -1,3 +1,4 @@
+import datetime
 from .models import Student, Trainer, Class, ClassRegistration
 from . import db
 
@@ -78,7 +79,13 @@ def get_registration_by_id(reg_id):
     return ClassRegistration.query.get(reg_id)
 
 def create_registration(data):
-    reg = ClassRegistration(**data)
+    now = datetime.utcnow()
+    reg = ClassRegistration(
+        student_id=data['student_id'],
+        class_id=data['class_id'],
+        registration_date=now,
+        expired_date=now + datetime.timedelta(days=30)  # ➕ Hạn mặc định 30 ngày
+    )
     db.session.add(reg)
     db.session.commit()
     return reg

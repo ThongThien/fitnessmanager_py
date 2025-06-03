@@ -1,10 +1,10 @@
-{% extends 'base.html' %}
-
-{% block content %}
-    <div class="d-flex justify-content-between align-items-center mb-3">
-      <h2>Danh sách Đăng ký Lớp</h2>
-      <a href="{{ url_for('main.registrations_create') }}" class="btn btn-success">Thêm Đăng ký mới</a>
-    </div>
+{% extends 'base.html' %} {% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h2>Danh sách Đăng ký Lớp</h2>
+  <a href="{{ url_for('main.registrations_create') }}" class="btn btn-success"
+    >Thêm Đăng ký mới</a
+  >
+</div>
 
 <div class="table-responsive">
   <table class="table table-striped table-hover align-middle">
@@ -14,7 +14,9 @@
         <th>Học viên</th>
         <th>Lớp học</th>
         <th>Ngày đăng ký</th>
-        <th>Hành động</th> <!-- Thêm cột hành động -->
+        <th>Ngày hết hạn</th>
+        <!-- ➕ -->
+        <th>Hành động</th>
       </tr>
     </thead>
     <tbody>
@@ -23,20 +25,40 @@
         <td>{{ reg.id }}</td>
         <td>{{ reg.student.name }}</td>
         <td>{{ reg.clazz.class_name }}</td>
-        <td>{{ reg.registration_date.strftime('%d-%m-%Y %H:%M:%S') }}</td>
+        <td>{{ reg.registration_date.strftime('%d-%m-%Y') }}</td>
         <td>
-          <form action="{{ url_for('main.registrations_delete', id=reg.id) }}" method="POST" onsubmit="return confirm('Bạn có chắc muốn xóa đăng ký này không?');">
+          {% if reg.expired_date %} {{ reg.expired_date.strftime('%d-%m-%Y') }}
+          {% else %}
+          <span class="text-muted fst-italic">Chưa có</span>
+          {% endif %}
+        </td>
+        <td class="d-flex gap-1">
+          <!-- Xóa -->
+          <form
+            action="{{ url_for('main.registrations_delete', id=reg.id) }}"
+            method="POST"
+            onsubmit="return confirm('Bạn có chắc muốn xóa không?');"
+          >
             <button type="submit" class="btn btn-danger btn-sm">Xóa</button>
           </form>
+          <!-- Gia hạn -->
+          <form
+            action="{{ url_for('main.registrations_extend', reg_id=reg.id) }}"
+            method="POST"
+          >
+            <select name="extend_type" class="form-select form-select-sm">
+              <option value="15d">+15 ngày</option>
+              <option value="1m">+1 tháng</option>
+              <option value="2m">+2 tháng</option>
+            </select>
+            <button type="submit" class="btn btn-primary btn-sm mt-1">
+              Gia hạn
+            </button>
+          </form>
         </td>
-      </tr>
-      {% else %}
-      <tr>
-        <td colspan="5" class="text-center fst-italic">Chưa có đăng ký nào</td> <!-- sửa colspan thành 5 -->
       </tr>
       {% endfor %}
     </tbody>
   </table>
 </div>
-
 {% endblock %}

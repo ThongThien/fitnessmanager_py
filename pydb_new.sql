@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 29, 2025 at 02:14 PM
+-- Generation Time: Jun 03, 2025 at 03:35 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -41,11 +41,7 @@ CREATE TABLE `classes` (
 --
 
 INSERT INTO `classes` (`id`, `class_name`, `description`, `schedule`, `max_students`, `trainer_id`) VALUES
-(1, 'Competition Gym', 'A class for bodybuilding enthusiasts to improve strength and fitness.', '2025-06-01 09:00:00', 15, 1),
-(2, 'Yoga', 'Yoga class to relax both body and mind, improve flexibility.', '2025-06-01 08:00:00', 20, 2),
-(3, 'Swimming', 'Swimming class for all levels, learn proper techniques.', '2025-06-02 10:00:00', 10, 3),
-(4, 'Bodybuilding', 'Bodybuilding class for muscle gain and fat loss.', '2025-06-03 11:00:00', 12, 4),
-(6, 'Bonx', 'aaa', 'Thứ 3, 5, 7 hàng tuần', 20, 6);
+(4, 'Bodybuilding', 'Bodybuilding class for muscle gain and fat loss.', '2025-06-03 11:00:00', 12, 4);
 
 -- --------------------------------------------------------
 
@@ -57,31 +53,22 @@ CREATE TABLE `class_registration` (
   `id` int(11) NOT NULL,
   `student_id` int(11) NOT NULL,
   `class_id` int(11) NOT NULL,
-  `registration_date` timestamp NOT NULL DEFAULT current_timestamp()
+  `registration_date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `expired_date` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `class_registration`
 --
 
-INSERT INTO `class_registration` (`id`, `student_id`, `class_id`, `registration_date`) VALUES
-(2, 2, 2, '2025-05-29 12:01:01'),
-(3, 3, 3, '2025-05-29 12:01:01'),
-(4, 4, 4, '2025-05-29 12:01:01'),
-(6, 6, 1, '2025-05-29 12:01:01'),
-(7, 7, 2, '2025-05-29 12:01:01'),
-(8, 8, 3, '2025-05-29 12:01:01'),
-(9, 9, 4, '2025-05-29 12:01:01'),
-(11, 11, 1, '2025-05-29 12:01:01'),
-(12, 12, 2, '2025-05-29 12:01:01'),
-(13, 13, 3, '2025-05-29 12:01:01'),
-(14, 14, 4, '2025-05-29 12:01:01'),
-(16, 16, 1, '2025-05-29 12:01:01'),
-(17, 17, 2, '2025-05-29 12:01:01'),
-(18, 18, 3, '2025-05-29 12:01:01'),
-(19, 19, 4, '2025-05-29 12:01:01'),
-(20, 3, 2, '2025-05-29 12:01:59'),
-(21, 20, 6, '2025-05-29 12:02:52');
+INSERT INTO `class_registration` (`id`, `student_id`, `class_id`, `registration_date`, `expired_date`) VALUES
+(4, 4, 4, '2025-05-29 12:01:01', '2025-09-16 01:25:12'),
+(9, 9, 4, '2025-05-29 12:01:01', NULL),
+(14, 14, 4, '2025-05-29 12:01:01', NULL),
+(19, 19, 4, '2025-05-29 12:01:01', NULL),
+(23, 4, 4, '2025-06-03 01:08:27', NULL),
+(24, 4, 4, '2025-06-03 01:08:35', NULL),
+(25, 4, 4, '2025-06-03 01:08:42', NULL);
 
 -- --------------------------------------------------------
 
@@ -123,7 +110,8 @@ INSERT INTO `students` (`id`, `name`, `email`, `phone`, `dob`, `address`, `gende
 (17, 'Chloe King', 'chloe.king@student.com', '0977890123', '1999-03-20', 'New York', 'Female'),
 (18, 'Jack Scott', 'jack.scott@student.com', '0988901234', '2001-08-22', 'San Francisco', 'Male'),
 (19, 'Henry Green', 'henry.green@student.com', '0999012345', '2000-10-30', 'Los Angeles', 'Male'),
-(20, 'Nguyễn Thông Thiên', 'nguyen5@edu.student', '0772438318', '2004-08-06', 'aa', 'Male');
+(20, 'Nguyễn Thông Thiên', 'nguyen5@edu.student', '0772438318', '2004-08-06', 'aa', 'Male'),
+(21, 'Himawari ', 'avaconner131@gmail.com', '222', '0000-00-00', '2', 'Male');
 
 -- --------------------------------------------------------
 
@@ -145,11 +133,8 @@ CREATE TABLE `trainers` (
 --
 
 INSERT INTO `trainers` (`id`, `name`, `email`, `phone`, `dob`, `expertise`) VALUES
-(1, 'Mark Adams', 'trainer1@gym.com', '0932345678', '1985-06-15', 'Professional Gym & Bodybuilding Expert'),
-(2, 'Jessica Parker', 'trainer2@gym.com', '0908765432', '1990-04-10', 'Yoga and Meditation Specialist'),
 (3, 'Brian Roberts', 'trainer3@swim.com', '0901234567', '1987-07-22', 'Swimming Instructor for All Levels'),
-(4, 'Jason Smith', 'trainer4@bodybuilding.com', '0912345678', '1983-02-05', 'Bodybuilding, Muscle Gain & Fat Loss Expert'),
-(6, 'Nguyễn Thông Thiên', 'thongthien2004@gmail.com', '012', '2004-08-04', 'aa');
+(4, 'Jason Smith', 'trainer4@bodybuilding.com', '0912345678', '1983-02-05', 'Bodybuilding, Muscle Gain & Fat Loss Expert');
 
 --
 -- Indexes for dumped tables
@@ -198,13 +183,13 @@ ALTER TABLE `classes`
 -- AUTO_INCREMENT for table `class_registration`
 --
 ALTER TABLE `class_registration`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `trainers`

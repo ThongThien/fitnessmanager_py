@@ -109,35 +109,6 @@ def registrations_create():
 
     return render_template('registrations/create.html', students=students, classes=classes)
 
-def registrations_create():
-    students = list_students()
-    classes = list_classes()
-    if request.method == 'POST':
-        student_id = request.form.get('student_id')
-        class_id = request.form.get('class_id')
-        if not student_id or not class_id:
-            abort(400, description="Thiếu thông tin học viên hoặc lớp học")
-        
-        student_id = int(student_id)
-        class_id = int(class_id)
-
-        # Kiểm tra đã đăng ký chưa
-        existing = ClassRegistration.query.filter_by(student_id=student_id, class_id=class_id).first()
-        if existing:
-            flash('Học viên này đã đăng ký lớp học rồi.', 'warning')
-            return redirect(url_for('main.registrations_create'))
-        
-        # Nếu chưa đăng ký thì thêm mới
-        data = {
-            'student_id': student_id,
-            'class_id': class_id,
-        }
-        add_registration(data)
-        flash('Đăng ký thành công!', 'success')
-        return redirect(url_for('main.registrations_index'))
-
-    return render_template('registrations/create.html', students=students, classes=classes)
-
 @main_bp.route('/registrations/extend/<int:reg_id>', methods=['POST'])
 def registrations_extend(reg_id):
     reg = ClassRegistration.query.get_or_404(reg_id)

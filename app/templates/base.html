@@ -1,81 +1,149 @@
 <!DOCTYPE html>
 <html lang="vi">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>{% block title %}Quản lý Trung tâm Đào tạo{% endblock %}</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-  nav {
-    background-color: #007bff;
-    padding: 10px 20px;
-  }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}Quản lý Trung tâm Đào tạo{% endblock %}</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      /* Navbar styles */
+      nav {
+        background-color: #007bff;
+      }
 
-  nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    gap: 20px;
-  }
+      nav .nav-link {
+        color: white !important;
+        font-weight: 600;
+        padding: 10px 15px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+        border-radius: 6px;
+      }
 
-  nav li {
-    display: inline;
-  }
+      nav .nav-link:hover,
+      nav .nav-link.active {
+        background-color: #0056b3 !important;
+        color: #e0e0e0 !important;
+        text-decoration: none;
+      }
 
-  nav a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-    padding: 6px 12px;
-    border-radius: 5px;
-  }
+      /* Header styles */
+      header {
+        background-color: #f8f9fa;
+        padding: 15px 0;
+        border-bottom: 1px solid #ddd;
+      }
 
-  nav a.active,
-  nav a:hover {
-    background-color: #0056b3;
-  }
-</style>
-</head>
-<body>
-  <header class="text-white">
-    <div class="container d-flex align-items-center justify-content-between flex-wrap">
-        <!-- Ảnh bên trái -->
-        <div class="flex-shrink-0 mb-3 mb-md-0">
-          <img src="https://ntu.edu.vn/Portals/6/ntu.edu.vn.png?ver=ckjn5juE3seliaBQFD_5vA%3d%3d" 
-              alt="Logo" 
-              style="width: 600px; height: auto;">
+      /* Footer */
+      footer {
+        background-color: #222;
+        color: #eee;
+        padding: 15px 0;
+        font-size: 0.9rem;
+        letter-spacing: 0.05em;
+      }
+
+      /* Wrapper to ensure footer sticks bottom */
+      .wrapper {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      main {
+        flex: 1;
+        padding-top: 20px;
+        padding-bottom: 40px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <div
+          class="container d-flex align-items-center justify-content-between flex-wrap"
+        >
+          <a href="{{ url_for('main.index') }}" class="d-block">
+            <img
+              src="https://img.freepik.com/premium-vector/fitness-logo_685023-1877.jpg"
+              alt="Logo"
+              style="width: 220px; height: auto"
+            />
+          </a>
         </div>
-        <!-- Text bên phải -->
-        <div class="text-end ms-md-4 text-dark">
-          <h1 class="display-5 fw-bold">Fitness Manager</h1>
+      </header>
+
+      <nav class="navbar navbar-expand-lg">
+        <div class="container">
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon" style="filter: invert(1)"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto gap-2">
+              <li class="nav-item">
+                <a
+                  class="nav-link {% if request.path == '/' %}active{% endif %}"
+                  href="{{ url_for('main.index') }}"
+                  >Trang Chủ</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link {% if '/students' in request.path %}active{% endif %}"
+                  href="{{ url_for('main.students_index') }}"
+                  >Học Viên</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link {% if '/classes' in request.path %}active{% endif %}"
+                  href="{{ url_for('main.classes_index') }}"
+                  >Lớp Học</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link {% if '/trainers' in request.path %}active{% endif %}"
+                  href="{{ url_for('main.trainers_index') }}"
+                  >Huấn Luyện Viên</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link {% if '/registrations' in request.path %}active{% endif %}"
+                  href="{{ url_for('main.registrations_index') }}"
+                  >Đăng Ký</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link {% if '/statistics' in request.path %}active{% endif %}"
+                  href="{{ url_for('main.statistics') }}"
+                  >Thống Kê</a
+                >
+              </li>
+            </ul>
+          </div>
         </div>
+      </nav>
+
+      <main class="container">{% block content %}{% endblock %}</main>
+
+      <footer class="text-center">&copy; 2025 Nguyễn Thông Thiên</footer>
     </div>
-  </header>
-  <nav>
-    <ul>
-      <li><a class="{% if request.path == '/' %}active{% endif %}" href="{{ url_for('main.index') }}">Trang Chủ</a></li>
-      <li><a class="{% if '/students' in request.path %}active{% endif %}" href="{{ url_for('main.students_index') }}">Học Viên</a></li>
-      <li><a class="{% if '/classes' in request.path %}active{% endif %}" href="{{ url_for('main.classes_index') }}">Lớp Học</a></li>
-      <li><a class="{% if '/trainers' in request.path %}active{% endif %}" href="{{ url_for('main.trainers_index') }}">Huấn Luyện Viên</a></li>
-      <li><a class="{% if '/registrations' in request.path %}active{% endif %}" href="{{ url_for('main.registrations_index') }}">Đăng Ký</a></li>
-      <li><a class="{% if '/statistics' in request.path %}active{% endif %}" href="{{ url_for('main.statistics') }}">Thống Kê</a></li>
-    </ul>
-  </nav>
 
-  <div class="wrapper d-flex flex-column min-vh-100">
-    <main class="flex-grow-1 overflow-auto container my-4">
-      {% block content %}{% endblock %}
-    </main>
-
-    <footer class="bg-dark text-white py-3 text-center">
-      &copy; 2025 Nguyễn Thông Thiên
-    </footer>
-  </div>
-
-
-<!-- Bootstrap JS Bundle -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-</body>
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
 </html>

@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime, timedelta
 from .models import Student, Trainer, Class, ClassRegistration
 from . import db
 
@@ -84,7 +84,7 @@ def create_registration(data):
         student_id=data['student_id'],
         class_id=data['class_id'],
         registration_date=now,
-        expired_date=now + datetime.timedelta(days=30)  # ➕ Hạn mặc định 30 ngày
+        expired_date=now + timedelta(days=30)
     )
     db.session.add(reg)
     db.session.commit()

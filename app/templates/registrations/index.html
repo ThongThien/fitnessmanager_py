@@ -45,13 +45,17 @@
           <form
             action="{{ url_for('main.registrations_extend', reg_id=reg.id) }}"
             method="POST"
+            class="d-flex align-items-center gap-2"
           >
-            <select name="extend_type" class="form-select form-select-sm">
+            <select
+              name="extend_type"
+              class="form-select form-select-sm w-auto"
+            >
               <option value="15d">+15 ngày</option>
               <option value="1m">+1 tháng</option>
               <option value="2m">+2 tháng</option>
             </select>
-            <button type="submit" class="btn btn-primary btn-sm mt-1">
+            <button type="submit" class="btn btn-primary btn-sm">
               Gia hạn
             </button>
           </form>

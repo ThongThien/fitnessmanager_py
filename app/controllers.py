@@ -13,7 +13,8 @@ def index():
 # --- Students ---
 @main_bp.route('/students')
 def students_index():
-    students = list_students()
+    q = request.args.get('q', '').strip()
+    students = list_students(q)
     return render_template('students/index.html', students=students)
 
 @main_bp.route('/students/create', methods=['GET', 'POST'])
@@ -65,7 +66,8 @@ def students_detail(id):
 # --- Registrations ---
 @main_bp.route('/registrations')
 def registrations_index():
-    registrations = list_registrations()
+    q = request.args.get('q', '').strip()
+    registrations = list_registrations(q)
     return render_template('registrations/index.html', registrations=registrations)
 
 @main_bp.route('/registrations/create', methods=['GET', 'POST'])
@@ -140,7 +142,8 @@ def registrations_delete(id):
 # --- Trainers ---
 @main_bp.route('/trainers')
 def trainers_index():
-    trainers = list_trainers()
+    q = request.args.get('q', '').strip()
+    trainers = list_trainers(q)
     return render_template('trainers/index.html', trainers=trainers)
 
 @main_bp.route('/trainers/create', methods=['GET', 'POST'])
@@ -190,7 +193,8 @@ def trainers_detail(id):
 # --- Classes ---
 @main_bp.route('/classes')
 def classes_index():
-    classes = list_classes()
+    q = request.args.get('q', '').strip()
+    classes = list_classes(q)
     return render_template('classes/index.html', classes=classes)
 
 @main_bp.route('/classes/<int:id>')

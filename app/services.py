@@ -1,8 +1,13 @@
 from .repositories import *
 
 # Students
-def list_students():
-    return get_all_students()
+def list_students(query=None):
+    students = get_all_students()
+    if query:
+        query = query.strip().lower()
+        students = [s for s in students if query in s.name.lower()]
+    return students
+
 
 def add_student(data):
     # validate có thể thêm ở đây
@@ -29,8 +34,12 @@ def remove_student(student_id):
 
 
 # Trainers
-def list_trainers():
-    return get_all_trainers()
+def list_trainers(query=None):
+    trainers = get_all_trainers()
+    if query:
+        query = query.strip().lower()
+        trainers = [t for t in trainers if query in t.name.lower()]
+    return trainers
 
 def add_trainer(data):
     return create_trainer(data)
@@ -49,8 +58,12 @@ def remove_trainer(trainer_id):
     return True
 
 # Classes
-def list_classes():
-    return get_all_classes()
+def list_classes(query=None):
+    classes = get_all_classes()
+    if query:
+        query = query.strip().lower()
+        classes = [c for c in classes if query in c.class_name.lower()]
+    return classes
 
 def add_class(data):
     return create_class(data)
@@ -69,8 +82,18 @@ def remove_class(class_id):
     return True
 
 # Registrations
-def list_registrations():
-    return get_all_registrations()
+def list_registrations(query=None):
+    registrations = get_all_registrations()
+
+    if query:
+        query = query.strip().lower()
+        registrations = [
+            reg for reg in registrations
+            if query in reg.student.name.lower() or query in reg.clazz.class_name.lower()
+        ]
+
+    return registrations
+
 
 def add_registration(data):
     return create_registration(data)

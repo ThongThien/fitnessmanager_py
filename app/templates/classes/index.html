@@ -1,51 +1,69 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1>Danh sách Lớp học</h1>
+  <a href="{{ url_for('main.classes_create') }}" class="btn btn-success"
+    >Thêm Lớp học mới</a
+  >
+</div>
+<form method="GET" class="mb-3 d-flex" action="">
+  <input
+    type="text"
+    name="q"
+    class="form-control me-2"
+    placeholder="Tìm kiếm lớp học..."
+    value="{{ request.args.get('q', '') }}"
+  />
+  <button type="submit" class="btn btn-outline-primary">Tìm</button>
+</form>
 
-{% block content %}
-    <div class="d-flex justify-content-between align-items-center mb-3">
-      <h2>Danh sách Lớp học</h2>
-      <a href="{{ url_for('main.classes_create') }}" class="btn btn-success">Thêm Lớp học mới</a>
-    </div>
-
-    <div class="table-responsive">
-      <table class="table table-striped table-hover align-middle">
-        <thead class="table-primary">
-          <tr>
-            <th>ID</th>
-            <th>Tên lớp</th>
-            <th>Mô tả</th>
-            <th>Lịch học</th>
-            <th>Số lượng tối đa</th>
-            <th>Huấn luyện viên</th>
-            <th>Hành động</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for cls in classes %}
-          <tr>
-            <td>{{ cls.id }}</td>
-            <td><a href="{{ url_for('main.classes_detail', id=cls.id) }}">{{ cls.class_name }}</a></td>
-            <td>{{ cls.description or 'Không có' }}</td>
-            <td>{{ cls.schedule }}</td>
-            <td>{{ cls.max_students }}</td>
-            <td>{{ cls.trainer.name if cls.trainer else 'Chưa có' }}</td>
-            <td>
-              <a href="{{ url_for('main.classes_edit', id=cls.id) }}" class="btn btn-sm btn-warning me-1">Sửa</a>
-              <form
-                action="{{ url_for('main.classes_delete', id=cls.id) }}"
-                method="POST"
-                class="d-inline"
-                onsubmit="return confirm('Bạn có chắc muốn xóa lớp này?');"
-              >
-                <button type="submit" class="btn btn-sm btn-danger">Xóa</button>
-              </form>
-            </td>
-          </tr>
-          {% else %}
-          <tr>
-            <td colspan="7" class="text-center fst-italic">Chưa có lớp học nào</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
+<div class="table-responsive">
+  <table class="table table-striped table-hover align-middle">
+    <thead class="table-primary">
+      <tr>
+        <th>ID</th>
+        <th>Tên lớp</th>
+        <th>Mô tả</th>
+        <th>Lịch học</th>
+        <th>Số lượng tối đa</th>
+        <th>Huấn luyện viên</th>
+        <th>Hành động</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for cls in classes %}
+      <tr>
+        <td>{{ cls.id }}</td>
+        <td>
+          <a href="{{ url_for('main.classes_detail', id=cls.id) }}"
+            >{{ cls.class_name }}</a
+          >
+        </td>
+        <td>{{ cls.description or 'Không có' }}</td>
+        <td>{{ cls.schedule }}</td>
+        <td>{{ cls.max_students }}</td>
+        <td>{{ cls.trainer.name if cls.trainer else 'Chưa có' }}</td>
+        <td>
+          <a
+            href="{{ url_for('main.classes_edit', id=cls.id) }}"
+            class="btn btn-sm btn-warning me-1"
+            >Sửa</a
+          >
+          <form
+            action="{{ url_for('main.classes_delete', id=cls.id) }}"
+            method="POST"
+            class="d-inline"
+            onsubmit="return confirm('Bạn có chắc muốn xóa lớp này?');"
+          >
+            <button type="submit" class="btn btn-sm btn-danger">Xóa</button>
+          </form>
+        </td>
+      </tr>
+      {% else %}
+      <tr>
+        <td colspan="7" class="text-center fst-italic">Chưa có lớp học nào</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 {% endblock %}
